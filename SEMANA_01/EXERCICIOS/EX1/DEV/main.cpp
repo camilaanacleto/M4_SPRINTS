@@ -1,8 +1,28 @@
 #include <iostream>
 #include <string>
+using namespace std;
 
 // 1 -  Faça uma função que recebe uma certa medida e ajusta ela percentualmente 
 // entre dois valores mínimo e máximo e retorna esse valor
+
+// Criação da função.
+void converteSensor() {
+  int x, y, z;
+  int menor, maior, medida, sub, aux, regra3;
+  cout << "Digite o valor mínimo: ";
+  cin >> y;
+  cout << "Digite o valor máximo: ";
+  cin >> z;
+  cout << "Digite o número que será a medida: ";
+  cin >> x;
+  menor = y;
+  maior = z;
+  medida = x;
+  sub = maior - menor; // Subtrai para eu conseguir trabalhar com três números e fazer uma regra de três
+  aux = medida - menor; // Subtrai para eu referenciar o novo "menor"
+  regra3 = (aux * 100) / sub; // Aqui é a regra de três para chegar no resultado. 
+  cout << "O valor em porcentagem do intervalo é: " << regra3 << "%";
+}
 
 // 2 - Faça uma função que simule a leitura de um sensor lendo o 
 // valor do teclado ao final a função retorna este valor
