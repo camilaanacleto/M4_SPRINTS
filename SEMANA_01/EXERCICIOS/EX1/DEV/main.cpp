@@ -1,31 +1,37 @@
 #include <iostream>
 #include <string>
-using namespace std;
+using namespace std; 
+
+int Mmaior, Mmenor;
 
 // 1 -  Faça uma função que recebe uma certa medida e ajusta ela percentualmente 
 // entre dois valores mínimo e máximo e retorna esse valor
 
-// Criação da função.
-void converteSensor() {
-  int x, y, z;
-  int menor, maior, medida, sub, aux, regra3;
-  cout << "Digite o valor mínimo: ";
-  cin >> y;
-  cout << "Digite o valor máximo: ";
-  cin >> z;
-  cout << "Digite o número que será a medida: ";
-  cin >> x;
-  menor = y;
-  maior = z;
-  medida = x;
+int converteSensor(int medida, int  menor, int maior) {
+  int sub, aux, regra3;
   sub = maior - menor; // Subtrai para eu conseguir trabalhar com três números e fazer uma regra de três
   aux = medida - menor; // Subtrai para eu referenciar o novo "menor"
   regra3 = (aux * 100) / sub; // Aqui é a regra de três para chegar no resultado. 
-  cout << "O valor em porcentagem do intervalo é: " << regra3 << "%";
+  cout << "O valor em porcentagem do intervalo é: " << regra3 << "%" << endl;
+  Mmaior = maior;
+  Mmenor = menor;
+  return regra3;
 }
 
 // 2 - Faça uma função que simule a leitura de um sensor lendo o 
 // valor do teclado ao final a função retorna este valor
+int leituraSensor() {
+    int valor;
+    cout << "Digite um valor entre " << Mmenor << " e " << Mmaior << endl;
+    cin >> valor;
+    if (valor >= Mmenor && valor <= Mmaior) {
+        return valor;
+    }
+    else {
+        cout << "Valor inválido!" << endl;
+        leituraSensor();
+    }
+}
 
 // 3 - Faça uma função que armazena uma medida inteira qualquer 
 // em um vetor fornecido. Note que como C não possui vetores 
@@ -34,7 +40,10 @@ void converteSensor() {
 // Evite também que, por acidente, um valor seja escrito em 
 // uma área de memória fora do vetor
 
-
+int armazenaValor(int *ponteiro, int tamanhoVetor, int posicaoAtual, int medida){
+    *(ponteiro+posicaoAtual)=medida; 
+	return posicaoAtual+1; 
+}
 
 // 4 - Faça uma função que recebe um vetor com 4 posições que contém 
 // o valor da distância de um pequeno robô até cada um dos seus 4 lados.
@@ -42,7 +51,12 @@ void converteSensor() {
 // de maior distância ("Direita", "Esquerda", "Frente", "Tras") e a 
 // segunda é esta maior distância.
 
+char *direcaoMenorCaminho(int *ponteiroVetor, int *ponteiroVariavel) {
+	for (int i = 0; i < 4; i++){
+		cout << *(ponteiroVetor + i) << " "; 
 
+	} 
+}
 
 
 // 5 - Faça uma função que pergunta ao usuário se ele deseja continuar o mapeamento e 
