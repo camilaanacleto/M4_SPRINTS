@@ -8,8 +8,10 @@ int Mmaior, Mmenor;
 // entre dois valores mínimo e máximo e retorna esse valor
 
 int converteSensor(int medida, int  menor, int maior) {
+  cout << medida << " " << menor << " " << maior << endl;
   int sub, aux, regra3;
   sub = maior - menor; // Subtrai para eu conseguir trabalhar com três números e fazer uma regra de três
+  cout << sub << endl;
   aux = medida - menor; // Subtrai para eu referenciar o novo "menor"
   regra3 = (aux * 100) / sub; // Aqui é a regra de três para chegar no resultado. 
   cout << "O valor em porcentagem do intervalo é: " << regra3 << "%" << endl;
@@ -22,15 +24,10 @@ int converteSensor(int medida, int  menor, int maior) {
 // valor do teclado ao final a função retorna este valor
 int leituraSensor() {
     int valor;
-    cout << "Digite um valor entre " << Mmenor << " e " << Mmaior << endl;
+    cout << "Digite o valor do sensor: ";
     cin >> valor;
-    if (valor >= Mmenor && valor <= Mmaior) {
-        return valor;
-    }
-    else {
-        cout << "Valor inválido!" << endl;
-        leituraSensor();
-    }
+    return valor;
+
 }
 
 // 3 - Faça uma função que armazena uma medida inteira qualquer 
@@ -51,17 +48,50 @@ int armazenaValor(int *ponteiro, int tamanhoVetor, int posicaoAtual, int medida)
 // de maior distância ("Direita", "Esquerda", "Frente", "Tras") e a 
 // segunda é esta maior distância.
 
-char *direcaoMenorCaminho(int *ponteiroVetor, int *ponteiroVariavel) {
-	for (int i = 0; i < 4; i++){
-		cout << *(ponteiroVetor + i) << " "; 
 
-	} 
+char *direcaoMenorCaminho(int *ponteiroVetor, int *ponteiroVariavel) {
+    int maior = 0;
+    int indice = 0;
+    char *direita = "direita";
+    char *esquerda = "esquerda";
+    char *frente = "frente";
+    char *tras = "tras";
+    for (int n = 0; n < 4; n++) {
+        if (*(ponteiroVetor+n) > maior) {
+            maior = *(ponteiroVetor + n);
+            indice = n;
+        }
+    }
+
+    *ponteiroVariavel = maior;
+    if (indice == 0) {
+        return direita;
+    }
+    else if (indice == 1) {
+        return esquerda;
+    }
+    else if (indice == 2) {
+        return frente;
+    }
+    else {
+        return tras;
+    }
 }
 
 
 // 5 - Faça uma função que pergunta ao usuário se ele deseja continuar o mapeamento e 
 // retorna verdadeiro ou falso
-
+int leComando(){
+	char comando;
+	cout << "Deseja continuar o mapeamento? (s/n)" << endl;
+	cin >> comando;
+	if (comando == 's') {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
 
 // 6 - A função abaixo (que está incompleta) vai "dirigindo" virtualmente um robô 
 // e através de 4 sensores em cada um dos 4 pontos do robo ("Direita", "Esquerda", 
@@ -83,9 +113,9 @@ int dirige(int *v,int maxv){
 	int posAtualVetor = 0;
 	int dirigindo = 1;		
 	while(dirigindo){		
-		int medida = /// .. Chame a função de de leitura da medida para a "Direita"
+		int medida = leituraSensor();
 		medida = converteSensor(medida,0,830);
-		posAtualVetor = // Chame a função para armazenar a medida no vetor
+		posAtualVetor = armazenaValor(vetorMov,maxVetor,posAtualVetor,medida);
         ///////////////////////////////////////////////////////////////////////////		
 		// Repita as chamadas acima para a "Esquerda", "Frente", "Tras"
 		// ................
@@ -99,7 +129,9 @@ int dirige(int *v,int maxv){
 // O trecho abaixo irá utilizar as funções acima para ler os sensores e o movimento
 // do robô e no final percorrer o vetor e mostrar o movimento a cada direção baseado 
 // na maior distância a cada movimento
-void percorre(int *v,int tamPercorrido){		
+
+void percorre(int *v,int tamPercorrido){	
+
 	int *vetorMov = v;
 	int maiorDir = 0;
 	
